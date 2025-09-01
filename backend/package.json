@@ -1,0 +1,13 @@
+{
+  "name": "simple-backend",
+  "version": "1.0.0",
+  "description": "A simple backend to test DB connection.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "pg": "^8.12.0"
+  }
+}

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hello World</title>
+    <style>
+        body {
+            background: #f5f6fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+        }
+        #container {
+            text-align: center;
+            padding: 2rem;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(44, 62, 80, 0.08);
+        }
+        h1 {
+            color: #2d3436;
+            font-size: 3rem;
+            margin-top: 0;
+        }
+        p {
+            color: #636e72;
+        }
+        #status {
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 4px;
+            background-color: #eee;
+        }
+        pre {
+            text-align: left;
+            white-space: pre-wrap; /* Helps with long lines in JSON */
+        }
+    </style>
+</head>
+<body>
+
+    <div id="container">
+        <h1>Hello, World!</h1>
+        <p>This is a simple web page served by Nginx in a Docker container.</p>
+        
+        <div id="status">Loading API status...</div>
+    </div>
+
+    <script>
+        // Wait for the HTML document to be fully loaded before running the script
+        document.addEventListener('DOMContentLoaded', () => {
+            // Use the modern 'fetch' API to make a request to our backend
+            // Nginx will see the '/api/status' path and proxy it correctly
+            fetch('/api/status')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    return response.json(); // Parse the JSON from the response
+                })
+                .then(data => {
+                    // Find the status div on the page
+                    const statusDiv = document.getElementById('status');
+                    // Display the formatted JSON response inside a <pre> tag
+                    statusDiv.innerHTML = `
+                        <strong>Connection Result:</strong>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                    `;
+                })
+                .catch(error => {
+                    // If anything goes wrong, display an error message
+                    console.error('Error fetching API status:', error);
+                    const statusDiv = document.getElementById('status');
+                    statusDiv.innerHTML = `<strong style="color: red;">Error:</strong><p>${error.message}</p>`;
+                });
+        });
+    </script>
+</body>
+</html>
