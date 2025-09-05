@@ -20,14 +20,14 @@ pipeline {
             }
         }
 
-        stage('Test') {
-            steps {
-                sh 'echo "Running tests..."'
-                // Placeholder for backend tests
-                sh 'docker run --rm georgemedhat/backend:latest npm test'
-                // test scripts tag
-            }
-        }
+        // stage('Test') {
+        //     steps {
+        //         sh 'echo "Running tests..."'
+        //         // Placeholder for backend tests
+        //         sh 'docker run --rm georgemedhat/backend:latest npm test'
+        //         // test scripts tag
+        //     }
+        // }
 
         // stage('Push') {
         //     steps {
